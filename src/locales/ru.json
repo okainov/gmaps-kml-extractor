@@ -6,9 +6,13 @@
   "form": {
     "urlPlaceholder": "Вставьте ссылку на Google MyMaps здесь...",
     "extract": "Извлечь KML файлы",
-    "validUrl": "✓ Обнаружена корректная ссылка Google MyMaps!",
-    "invalidUrl": "Пожалуйста, введите корректную ссылку Google MyMaps",
-    "invalidUrlHelp": "Корректные ссылки должны содержать 'maps.google.com/maps/d/' и включать ID карты (параметр mid)"
+    "validUrl": "Обнаружена корректная ссылка Google MyMaps!",
+    "invalidUrl": "Пожалуйста, введите корректную ссылку",
+    "invalidUrlHelp": "Введённая ссылка некорректно отформатирована. Проверьте и попробуйте снова.",
+    "invalidGoogleMaps": "Некорректная ссылка Google MyMaps",
+    "invalidGoogleMapsHelp": "Это похоже на ссылку Google Maps, но не удалось извлечь ID карты. Проверьте ссылку.",
+    "validUrlNotGoogle": "Обнаружена корректная ссылка - ищем ссылки Google Maps...",
+    "scrapingPageHelp": "Мы попытаемся найти ссылки Google MyMaps на этой странице."
   },
   "download": {
     "title": "Варианты загрузки",
@@ -17,6 +21,15 @@
     "kml": "KML (Несжатый)",
     "kmlDesc": "Стандартный формат, ограниченная поддержка иконок",
     "newExtraction": "Извлечь другую карту"
+  },
+  "scraped": {
+    "title": "Найдены ссылки Google Maps",
+    "scanning": "Сканируем страницу на предмет ссылок Google Maps...",
+    "found": "Найдено {count} ссылок Google Maps на этой странице:",
+    "notFound": "Ссылки Google Maps не найдены",
+    "notFoundHelp": "Страница не содержит распознаваемых ссылок Google MyMaps.",
+    "error": "Не удалось отсканировать страницу",
+    "tryAgain": "Попробовать снова"
   },
   "examples": {
     "title": "Примеры ссылок:",
