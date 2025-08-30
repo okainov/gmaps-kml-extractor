@@ -596,7 +596,9 @@ function extractMidFromUrl(url: string): string | null {
 
 function extractMid() {
     const validation = urlValidation.value
-    plausible('ExtractClick')
+    if (typeof window !== 'undefined') {
+        (window as any).plausible?.('ExtractClick')
+    }
 
     if (validation.type === 'invalid-url') {
         return // Show error message through template
