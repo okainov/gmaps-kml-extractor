@@ -1,0 +1,32 @@
+{
+  "app": {
+    "title": "Google MyMaps KML Extractor",
+    "description": "Extract KML and GPX files from Google MyMaps easily"
+  },
+  "form": {
+    "urlPlaceholder": "Paste your Google MyMaps URL here...",
+    "extract": "Extract KML Files",
+    "validUrl": "✓ Valid Google MyMaps URL detected!",
+    "invalidUrl": "Please enter a valid Google MyMaps URL",
+    "invalidUrlHelp": "Valid URLs should contain 'maps.google.com/maps/d/' and include a map ID (mid parameter)"
+  },
+  "download": {
+    "title": "Download Options",
+    "kmz": "KMZ (Compressed)",
+    "kmzDesc": "Recommended format with full icon support",
+    "kml": "KML (Uncompressed)", 
+    "kmlDesc": "Standard format, limited icon support",
+    "newExtraction": "Extract Another Map"
+  },
+  "examples": {
+    "title": "Example URLs:",
+    "edit": "Edit URL",
+    "viewer": "Viewer URL",
+    "embed": "Embed URL"
+  },
+  "language": {
+    "switch": "Switch Language",
+    "english": "English",
+    "russian": "Русский"
+  }
+}

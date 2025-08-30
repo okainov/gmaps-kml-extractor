@@ -1,0 +1,32 @@
+{
+  "app": {
+    "title": "Экспорт KML из Google MyMaps",
+    "description": "Легко извлекайте KML и GPX файлы из Google MyMaps"
+  },
+  "form": {
+    "urlPlaceholder": "Вставьте ссылку на Google MyMaps здесь...",
+    "extract": "Извлечь KML файлы",
+    "validUrl": "✓ Обнаружена корректная ссылка Google MyMaps!",
+    "invalidUrl": "Пожалуйста, введите корректную ссылку Google MyMaps",
+    "invalidUrlHelp": "Корректные ссылки должны содержать 'maps.google.com/maps/d/' и включать ID карты (параметр mid)"
+  },
+  "download": {
+    "title": "Варианты загрузки",
+    "kmz": "KMZ (Сжатый)",
+    "kmzDesc": "Рекомендуемый формат с полной поддержкой иконок",
+    "kml": "KML (Несжатый)",
+    "kmlDesc": "Стандартный формат, ограниченная поддержка иконок",
+    "newExtraction": "Извлечь другую карту"
+  },
+  "examples": {
+    "title": "Примеры ссылок:",
+    "edit": "Ссылка редактирования",
+    "viewer": "Ссылка просмотра",
+    "embed": "Ссылка вставки"
+  },
+  "language": {
+    "switch": "Сменить язык",
+    "english": "English",
+    "russian": "Русский"
+  }
+}
