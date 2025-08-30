@@ -28,5 +28,16 @@
     "switch": "Switch Language",
     "english": "English",
     "russian": "Русский"
+  },
+  "theme": {
+    "switch": "Switch Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto",
+    "tooltip": {
+      "light": "Switch to light theme",
+      "dark": "Switch to dark theme",
+      "auto": "Use system theme"
+    }
   }
 }

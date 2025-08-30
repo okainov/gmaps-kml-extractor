@@ -1,6 +1,6 @@
-Create me a simple app based on Vue.js with RU and EN i18n. Prefer Typescript instead of JS where possible.
+This is a simple app based on Vue.js with RU and EN i18n. Prefer Typescript instead of JS where possible.
 
-It should be great looking, utilize Tailwind and be adaptive and responsive for mobiles as well as desktops.
+It should be great looking, utilize Tailwind and be adaptive and responsive for mobiles as well as desktops. It should support dark/light themes and default to auto-detected theme from client.
 
 The app is about getting KML/GPX from Google MyMaps.
 

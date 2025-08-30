@@ -1,16 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 theme-transition">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 theme-transition">
       <div class="max-w-4xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">{{ $t('app.title') }}</h1>
-            <p class="text-gray-600 mt-1">{{ $t('app.description') }}</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title') }}</h1>
+            <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}</p>
           </div>
           
-          <!-- Language Switcher -->
-          <div class="flex items-center space-x-2">
+          <!-- Controls -->
+          <div class="flex items-center space-x-3">
+            <!-- Theme Switcher -->
+            <ThemeSwitcher />
+
+            <!-- Language Switcher -->
             <button
               @click="switchLanguage"
               class="btn-secondary text-sm"
@@ -30,7 +34,7 @@
       <div class="card p-6 mb-8">
         <form @submit.prevent="extractMid" class="space-y-4">
           <div>
-            <label for="url-input" class="block text-sm font-medium text-gray-700 mb-2">
+            <label for="url-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">
               Google MyMaps URL
             </label>
             <input
@@ -40,28 +44,28 @@
               :placeholder="$t('form.urlPlaceholder')"
               class="input-field"
               :class="{
-                'border-green-500 focus:ring-green-500': isValidUrl && inputUrl,
-                'border-red-500 focus:ring-red-500': !isValidUrl && inputUrl && hasAttempted
+                'border-green-500 focus:ring-green-500 dark:border-green-400': isValidUrl && inputUrl,
+                'border-red-500 focus:ring-red-500 dark:border-red-400': !isValidUrl && inputUrl && hasAttempted
               }"
             />
           </div>
           
           <!-- Validation Messages -->
           <div v-if="inputUrl" class="text-sm">
-            <div v-if="isValidUrl" class="text-green-600 flex items-center">
+            <div v-if="isValidUrl" class="text-green-600 dark:text-green-400 flex items-center theme-transition">
               <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
               {{ $t('form.validUrl') }}
             </div>
-            <div v-else-if="hasAttempted" class="text-red-600">
+            <div v-else-if="hasAttempted" class="text-red-600 dark:text-red-400 theme-transition">
               <div class="flex items-center">
                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                 </svg>
                 {{ $t('form.invalidUrl') }}
               </div>
-              <p class="mt-1 text-xs text-gray-500">{{ $t('form.invalidUrlHelp') }}</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400 theme-transition">{{ $t('form.invalidUrlHelp') }}</p>
             </div>
           </div>
 
@@ -85,7 +89,7 @@
 
       <!-- Download Links -->
       <div v-if="extractedMid" class="card p-6 mb-8">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ $t('download.title') }}</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 theme-transition">{{ $t('download.title') }}</h2>
         
         <div class="grid gap-4 sm:grid-cols-2">
           <!-- KMZ Download -->
@@ -93,14 +97,14 @@
             :href="kmzUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="block p-4 border-2 border-primary-200 rounded-lg hover:border-primary-400 hover:bg-primary-50 transition-all group"
+            class="block p-4 border-2 border-primary-200 dark:border-primary-700 rounded-lg hover:border-primary-400 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group"
           >
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="font-semibold text-primary-700 group-hover:text-primary-800">{{ $t('download.kmz') }}</h3>
-                <p class="text-sm text-gray-600 mt-1">{{ $t('download.kmzDesc') }}</p>
+                <h3 class="font-semibold text-primary-700 dark:text-primary-300 group-hover:text-primary-800 dark:group-hover:text-primary-200 theme-transition">{{ $t('download.kmz') }}</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 theme-transition">{{ $t('download.kmzDesc') }}</p>
               </div>
-              <svg class="w-5 h-5 text-primary-600 group-hover:text-primary-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300 theme-transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
             </div>
@@ -111,14 +115,14 @@
             :href="kmlUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="block p-4 border-2 border-gray-200 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all group"
+            class="block p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all group"
           >
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="font-semibold text-gray-700 group-hover:text-gray-800">{{ $t('download.kml') }}</h3>
-                <p class="text-sm text-gray-600 mt-1">{{ $t('download.kmlDesc') }}</p>
+                <h3 class="font-semibold text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 theme-transition">{{ $t('download.kml') }}</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 theme-transition">{{ $t('download.kmlDesc') }}</p>
               </div>
-              <svg class="w-5 h-5 text-gray-600 group-hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 theme-transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
             </div>
@@ -135,26 +139,26 @@
 
       <!-- Examples -->
       <div class="card p-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('examples.title') }}</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 theme-transition">{{ $t('examples.title') }}</h2>
         
         <div class="space-y-3 text-sm">
           <div>
-            <span class="font-medium text-gray-700">{{ $t('examples.edit') }}:</span>
-            <code class="block mt-1 p-2 bg-gray-100 rounded text-xs break-all">
+            <span class="font-medium text-gray-700 dark:text-gray-300 theme-transition">{{ $t('examples.edit') }}:</span>
+            <code class="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all text-gray-800 dark:text-gray-200 theme-transition">
               https://www.google.com/maps/d/u/0/edit?hl=en&mid=1tWCqTerra6PbOHyn-wncH13ESR2stjw&ll=26.361432629836692%2C52.2930317&z=7
             </code>
           </div>
           
           <div>
-            <span class="font-medium text-gray-700">{{ $t('examples.viewer') }}:</span>
-            <code class="block mt-1 p-2 bg-gray-100 rounded text-xs break-all">
+            <span class="font-medium text-gray-700 dark:text-gray-300 theme-transition">{{ $t('examples.viewer') }}:</span>
+            <code class="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all text-gray-800 dark:text-gray-200 theme-transition">
               https://www.google.com/maps/d/u/0/viewer?mid=1-g8EcBCaspkcM3_giYHSVtP2LS1HSr8&femb=1&ll=48.132268571799074%2C11.55401675000002&z=13
             </code>
           </div>
           
           <div>
-            <span class="font-medium text-gray-700">{{ $t('examples.embed') }}:</span>
-            <code class="block mt-1 p-2 bg-gray-100 rounded text-xs break-all">
+            <span class="font-medium text-gray-700 dark:text-gray-300 theme-transition">{{ $t('examples.embed') }}:</span>
+            <code class="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all text-gray-800 dark:text-gray-200 theme-transition">
               https://www.google.com/maps/d/u/0/embed?mid=1-g8EcBCaspkcM3_giYHSVtP2LS1HSr8&#038;ehbc=2E312F
             </code>
           </div>
@@ -163,19 +167,20 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-16 py-8 border-t bg-white">
-      <div class="max-w-4xl mx-auto px-4 text-center text-gray-600 text-sm">
+    <footer class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
+      <div class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition">
         <p>Made with ❤️ using Vue.js and Tailwind CSS</p>
       </div>
     </footer>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ThemeSwitcher } from './components'
 
-const { locale, t } = useI18n()
+const { locale } = useI18n()
 
 // Reactive data
 const inputUrl = ref('')
@@ -215,7 +220,7 @@ const kmlUrl = computed(() => {
 })
 
 // Methods
-function extractMidFromUrl(url) {
+function extractMidFromUrl(url: string): string | null {
   try {
     const urlObj = new URL(url)
     
@@ -253,9 +258,12 @@ function extractMid() {
   
   // Simulate processing delay for better UX
   setTimeout(() => {
-    extractedMid.value = extractMidFromUrl(inputUrl.value)
+    const mid = extractMidFromUrl(inputUrl.value)
+    if (mid) {
+      extractedMid.value = mid
+    }
     isLoading.value = false
-  }, 500)
+  }, 100)
 }
 
 function resetForm() {
