@@ -16,7 +16,7 @@ export default defineConfig({
     manifest: {
       name: 'KML Extractor',
       short_name: 'KML Extractor',
-      description: 'Extract KML files from Google MyMaps easily',
+      description: 'Extract KML/KMZ files from Google My Maps easily',
       theme_color: '#ffffff',
       start_url: '/',
     },

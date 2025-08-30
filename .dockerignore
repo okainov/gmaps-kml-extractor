@@ -15,6 +15,7 @@
 !tailwind.config.js
 !postcss.config.js
 !index.html
+!pwa-assets.config.ts
 
 # Keep nginx config for production builds
 !nginx.conf
