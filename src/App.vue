@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 theme-transition">
+        class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 theme-transition flex flex-col">
         <!-- Header -->
         <header
             class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 theme-transition">
@@ -35,7 +35,7 @@
         </header>
 
         <!-- Main Content -->
-        <main class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <main class="flex-1 max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 w-full">
             <!-- URL Input Form -->
             <div class="card p-6 mb-8">
                 <form @submit.prevent="extractMid" class="space-y-4">
@@ -376,7 +376,7 @@
 
         <!-- Footer -->
         <footer
-            class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
+            class="py-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
             <div
                 class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition space-y-2">
                 <p>{{ $t('footer.madeWith') }}</p>
