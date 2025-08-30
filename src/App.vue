@@ -493,20 +493,15 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
         scrapedPageSize.value = 0 // Reset page size
 
         // Use a CORS proxy to fetch the page content
-        const corsProxy = 'https://api.allorigins.win/get?url='
-        const response = await fetch(corsProxy + encodeURIComponent(url))
+        const corsProxy = 'https://cors-proxy-01.trips.place/'
+        const response = await fetch(corsProxy + url)
 
         if (!response.ok) {
             throw new Error(`Network error: ${response.status} ${response.statusText}`)
         }
 
-        const data = await response.json()
+        const html = await response.text()
 
-        if (!data.contents) {
-            throw new Error('Failed to fetch page content - the page may be empty or blocked')
-        }
-
-        const html = data.contents
         scrapedPageSize.value = new Blob([html]).size // Calculate page size in bytes
 
         // Regex patterns to find Google Maps URLs
