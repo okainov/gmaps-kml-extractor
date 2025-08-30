@@ -4,20 +4,5 @@ services:
   app:
     build: .
     ports:
-      - "3000:80"
+      - "8001:80"
     restart: unless-stopped
-    
-  # Development service (optional)
-  dev:
-    build:
-      context: .
-      target: build
-    working_dir: /app
-    command: npm run dev
-    ports:
-      - "3001:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development

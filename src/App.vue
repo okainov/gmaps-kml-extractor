@@ -517,6 +517,7 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
         ]
 
         const foundUrls = new Set<string>()
+        const seenMids = new Set<string>()
 
         patterns.forEach(pattern => {
             const matches = html.match(pattern)
@@ -530,7 +531,14 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
 
                     try {
                         new URL(cleanUrl) // Validate URL
-                        foundUrls.add(cleanUrl)
+                        
+                        // Extract MID to check for duplicates
+                        const mid = extractMidFromUrl(cleanUrl)
+                        if (mid && !seenMids.has(mid)) {
+                            seenMids.add(mid)
+                            foundUrls.add(cleanUrl)
+                        }
+                        // If MID already seen, skip this URL
                     } catch {
                         // Invalid URL, skip
                     }
