@@ -342,7 +342,7 @@
                             $t('examples.edit') }}:</span>
                         <code
                             class="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all text-gray-800 dark:text-gray-200 theme-transition">
-              https://www.google.com/maps/d/u/0/edit?hl=en&mid=1tWCqTerra6PbOHyn-wncH13ESR2stjw&ll=26.361432629836692%2C52.2930317&z=7
+              https://www.google.com/maps/d/u/0/edit?hl=en&mid=1-XXXXXXXXXXXXXXXXXXX&ll=26.361432629836692%2C52.2930317&z=7
             </code>
                     </div>
 
@@ -351,7 +351,7 @@
                             $t('examples.viewer') }}:</span>
                         <code
                             class="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all text-gray-800 dark:text-gray-200 theme-transition">
-              https://www.google.com/maps/d/u/0/viewer?mid=1-g8EcBCaspkcM3_giYHSVtP2LS1HSr8&femb=1&ll=48.132268571799074%2C11.55401675000002&z=13
+              https://www.google.com/maps/d/u/0/viewer?mid=1-XXXXXXXXXXXXXXXXXXX&femb=1&ll=48.132268571799074%2C11.55401675000002&z=13
             </code>
                     </div>
 
@@ -360,7 +360,7 @@
                             $t('examples.embed') }}:</span>
                         <code
                             class="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all text-gray-800 dark:text-gray-200 theme-transition">
-              https://www.google.com/maps/d/u/0/embed?mid=1-g8EcBCaspkcM3_giYHSVtP2LS1HSr8&#038;ehbc=2E312F
+              https://www.google.com/maps/d/u/0/embed?mid=1-XXXXXXXXXXXXXXXXXXX&ehbc=2E312F
             </code>
                     </div>
                 </div>
