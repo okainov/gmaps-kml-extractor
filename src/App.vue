@@ -8,8 +8,10 @@
                 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
                     <!-- Title section - centered on mobile, left-aligned on desktop -->
                     <div class="text-center sm:text-left">
-                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title') }}</h1>
-                        <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}</p>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title')
+                            }}</h1>
+                        <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}
+                        </p>
                     </div>
 
                     <!-- Controls - centered on mobile, right-aligned on desktop -->
@@ -19,7 +21,9 @@
                             <ThemeSwitcher />
 
                             <!-- Language Switcher -->
-                            <button @click="switchLanguage" class="btn-secondary text-sm plausible-event-name=SwitchLanguage" :title="$t('language.switch')">
+                            <button @click="switchLanguage"
+                                class="btn-secondary text-sm plausible-event-name=SwitchLanguage"
+                                :title="$t('language.switch')">
                                 <span class="hidden sm:inline">{{ currentLanguage === 'en' ? $t('language.russian') :
                                     $t('language.english') }}</span>
                                 <span class="sm:hidden">{{ currentLanguage === 'en' ? 'RU' : 'EN' }}</span>
@@ -128,100 +132,104 @@
             </div>
 
             <!-- Scraped URLs Section -->
-            <div v-if="(isScrapingFlow) && urlValidation.type === 'valid-url'"
-                class="card p-6 mb-8">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
-                    {{ scrapingError ? $t('scraped.error') : $t('scraped.title') }}
-                </h2>
+            <div v-if="isScrapingFlow && scrapedUrls.length != 1">
+                <div v-if="isScrapingFlow && urlValidation.type === 'valid-url'" class="card p-6 mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
+                        {{ scrapingError ? $t('scraped.error') :
+                            (scrapedUrls.length == 0 ? $t('scraped.notFound') : $t('scraped.title')) }}
+                    </h2>
 
-                <!-- Loading state -->
-                <div v-if="isScrapingUrl" class="flex items-center justify-center py-8">
-                    <div class="flex items-center space-x-3">
-                        <div
-                            class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 dark:border-primary-400">
-                        </div>
-                        <span class="text-gray-600 dark:text-gray-400">{{ $t('scraped.scanning') }}</span>
-                    </div>
-                </div>
-
-                <!-- Error state -->
-                <div v-else-if="scrapingError" class="text-center py-6">
-                    <svg class="w-12 h-12 text-red-400 dark:text-red-500 mx-auto mb-3" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <p class="text-red-600 dark:text-red-400 font-medium mb-2">
-                        {{ $t('scraped.error') }}
-                    </p>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
-                        {{ scrapingError }}
-                    </p>
-                    <button @click="scrapingError = ''; extractMid()" class="mt-4 btn-secondary text-sm plausible-event-name=ErrorTryAgain">
-                        {{ $t('scraped.tryAgain') }}
-                    </button>
-                </div>
-
-                <!-- Scraped URLs found -->
-                <div v-else-if="scrapedUrls.length > 0" class="space-y-3">
-                    <p class="text-green-600 dark:text-green-400 font-medium">
-                        ✅ {{ $t('scraped.found', { count: scrapedUrls.length }) }}
-                    </p>
-                    <div class="grid gap-3">
-                        <button v-for="(scrapedUrl, index) in scrapedUrls" :key="index"
-                            @click="useScrapedUrl(scrapedUrl)"
-                            class="text-left p-4 border rounded-lg transition-all group plausible-event-name=scrapedClick"
-                            :class="scrapedUrl === selectedScrapedUrl 
-                                ? 'bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700' 
-                                : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20'">
-                            <div class="flex items-start justify-between">
-                                <div class="flex-1 mr-3">
-                                    <span class="text-sm font-mono break-all transition-colors"
-                                        :class="scrapedUrl === selectedScrapedUrl 
-                                            ? 'text-green-700 dark:text-green-300' 
-                                            : 'text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300'">
-                                        {{ scrapedUrl }}
-                                    </span>
-                                </div>
-                                <div class="flex items-center space-x-2 flex-shrink-0 mt-0.5">
-                                    <!-- Selected checkmark -->
-                                    <svg v-if="scrapedUrl === selectedScrapedUrl" 
-                                        class="w-4 h-4 text-green-600 dark:text-green-400" 
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <!-- Arrow -->
-                                    <svg class="w-4 h-4 transition-colors" 
-                                        :class="scrapedUrl === selectedScrapedUrl 
-                                            ? 'text-green-600 dark:text-green-400' 
-                                            : 'text-gray-400 dark:text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400'"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                    </svg>
-                                </div>
+                    <!-- Loading state -->
+                    <div v-if="isScrapingUrl" class="flex items-center justify-center py-8">
+                        <div class="flex items-center space-x-3">
+                            <div
+                                class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 dark:border-primary-400">
                             </div>
+                            <span class="text-gray-600 dark:text-gray-400">{{ $t('scraped.scanning') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Error state -->
+                    <div v-else-if="scrapingError" class="text-center py-6">
+                        <svg class="w-12 h-12 text-red-400 dark:text-red-500 mx-auto mb-3" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-red-600 dark:text-red-400 font-medium mb-2">
+                            {{ $t('scraped.error') }}
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
+                            {{ scrapingError }}
+                        </p>
+                        <button @click="scrapingError = ''; extractMid()"
+                            class="mt-4 btn-secondary text-sm plausible-event-name=ErrorTryAgain">
+                            {{ $t('scraped.tryAgain') }}
                         </button>
                     </div>
-                </div>
 
-                <!-- No Google Maps URLs found -->
-                <div v-else-if="!isScrapingUrl" class="text-center py-6">
-                    <svg class="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                    <p class="text-orange-600 dark:text-orange-400 font-medium">
-                        {{ $t('scraped.notFound') }}
-                    </p>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
-                        {{ $t('scraped.notFoundHelp') }}
-                    </p>
-                    <p v-if="formattedPageSize" class="text-gray-400 dark:text-gray-500 text-xs mt-2">
-                        {{ $t('scraped.pageInfo', { size: formattedPageSize }) }}
-                    </p>
+                    <!-- Scraped URLs found -->
+                    <div v-else-if="scrapedUrls.length > 1" class="space-y-3">
+                        <p class="text-green-600 dark:text-green-400 font-medium">
+                            ✅ {{ $t('scraped.found', { count: scrapedUrls.length }) }}
+                        </p>
+                        <div class="grid gap-3">
+                            <button v-for="(scrapedUrl, index) in scrapedUrls" :key="index"
+                                @click="useScrapedUrl(scrapedUrl)"
+                                class="text-left p-4 border rounded-lg transition-all group plausible-event-name=scrapedClick"
+                                :class="scrapedUrl === selectedScrapedUrl
+                                    ? 'bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700'
+                                    : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20'">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1 mr-3">
+                                        <span class="text-sm font-mono break-all transition-colors"
+                                            :class="scrapedUrl === selectedScrapedUrl
+                                                ? 'text-green-700 dark:text-green-300'
+                                                : 'text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300'">
+                                            {{ scrapedUrl }}
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 flex-shrink-0 mt-0.5">
+                                        <!-- Selected checkmark -->
+                                        <svg v-if="scrapedUrl === selectedScrapedUrl"
+                                            class="w-4 h-4 text-green-600 dark:text-green-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        <!-- Arrow -->
+                                        <svg class="w-4 h-4 transition-colors"
+                                            :class="scrapedUrl === selectedScrapedUrl
+                                                ? 'text-green-600 dark:text-green-400'
+                                                : 'text-gray-400 dark:text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400'"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- No Google Maps URLs found -->
+                    <div v-else-if="!isScrapingUrl && scrapedUrls.length == 0" class="text-center py-6">
+                        <svg class="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        <p class="text-orange-600 dark:text-orange-400 font-medium">
+                            {{ $t('scraped.notFound') }}
+                        </p>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                            {{ $t('scraped.notFoundHelp') }}
+                        </p>
+                        <p v-if="formattedPageSize" class="text-gray-400 dark:text-gray-500 text-xs mt-2">
+                            {{ $t('scraped.pageInfo', { size: formattedPageSize }) }}
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -276,7 +284,8 @@
 
 
                 <!-- Google Maps URL Section -->
-                <div v-if="currentGoogleMapsUrl" class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+                <div v-if="currentGoogleMapsUrl"
+                    class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
                     <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                         {{ $t('download.googleMapsUrl') }}
                     </h3>
@@ -317,10 +326,8 @@
                 <div class="text-center mt-6 mb-4">
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
                         {{ $t('download.supportMessage') }}
-                        <a href="https://buymeacoffee.com/okainov" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium underline plausible-event-name=BuyMeTea">
+                        <a href="https://buymeacoffee.com/okainov" target="_blank" rel="noopener noreferrer"
+                            class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium underline plausible-event-name=BuyMeTea">
                             {{ $t('download.buyMeTea') }}
                         </a>
                     </p>
@@ -370,7 +377,8 @@
         <!-- Footer -->
         <footer
             class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
-            <div class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition space-y-2">
+            <div
+                class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition space-y-2">
                 <p>{{ $t('footer.madeWith') }}</p>
                 <p class="text-xs opacity-75">{{ $t('footer.disclaimer') }}</p>
             </div>
@@ -390,10 +398,10 @@ function handlePopState() {
     const path = window.location.pathname
     const newLocale = path.startsWith('/ru') ? 'ru' : 'en'
     locale.value = newLocale
-    
+
     // Save to localStorage
     localStorage.setItem('locale', newLocale)
-    
+
     // Update document meta tags
     updateDocumentMeta(newLocale)
 }
@@ -421,7 +429,7 @@ const scrapedPageSize = ref(0)
 // Computed properties
 const currentLanguage = computed(() => locale.value)
 
-const urlValidation = computed(() => {   
+const urlValidation = computed(() => {
     extractedMid.value = ''
     scrapedUrls.value = []
     selectedScrapedUrl.value = ''
@@ -483,7 +491,7 @@ const currentGoogleMapsUrl = computed(() => {
 
 const formattedPageSize = computed(() => {
     if (scrapedPageSize.value === 0) return ''
-    
+
     const size = scrapedPageSize.value
     if (size < 1024) {
         return `${size} bytes`
@@ -563,7 +571,7 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
 
                     try {
                         new URL(cleanUrl) // Validate URL
-                        
+
                         // Extract MID to check for duplicates
                         const mid = extractMidFromUrl(cleanUrl)
                         if (mid && !seenMids.has(mid)) {
@@ -696,21 +704,21 @@ function resetForm() {
 // Update document meta tags based on locale
 function updateDocumentMeta(locale: string) {
     document.documentElement.lang = locale
-    
+
     // Update canonical URL
     const canonical = document.querySelector('link[rel="canonical"]')
     if (canonical) {
         const baseUrl = 'https://kml.trips.place'
         canonical.setAttribute('href', locale === 'en' ? baseUrl + '/' : `${baseUrl}/${locale}`)
     }
-    
+
     // Update OG URL
     const ogUrl = document.querySelector('meta[property="og:url"]')
     if (ogUrl) {
         const baseUrl = 'https://kml.trips.place'
         ogUrl.setAttribute('content', locale === 'en' ? baseUrl + '/' : `${baseUrl}/${locale}`)
     }
-    
+
     // Update Twitter URL
     const twitterUrl = document.querySelector('meta[name="twitter:url"]')
     if (twitterUrl) {
@@ -722,13 +730,13 @@ function updateDocumentMeta(locale: string) {
 function switchLanguage() {
     const newLocale = locale.value === 'en' ? 'ru' : 'en'
     locale.value = newLocale
-    
+
     // Save to localStorage
     localStorage.setItem('locale', newLocale)
-    
+
     // Update document meta tags
     updateDocumentMeta(newLocale)
-    
+
     // Update URL without reloading the page
     const newPath = newLocale === 'en' ? '/' : `/${newLocale}`
     window.history.pushState(null, '', newPath)
