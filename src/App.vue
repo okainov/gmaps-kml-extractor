@@ -5,25 +5,26 @@
         <header
             class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 theme-transition">
             <div class="max-w-4xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title')
-                        }}</h1>
-                        <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}
-                        </p>
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+                    <!-- Title section - centered on mobile, left-aligned on desktop -->
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title') }}</h1>
+                        <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}</p>
                     </div>
 
-                    <!-- Controls -->
-                    <div class="flex items-center space-x-3">
-                        <!-- Theme Switcher -->
-                        <ThemeSwitcher />
+                    <!-- Controls - centered on mobile, right-aligned on desktop -->
+                    <div class="flex justify-center sm:justify-end">
+                        <div class="flex items-center space-x-3">
+                            <!-- Theme Switcher -->
+                            <ThemeSwitcher />
 
-                        <!-- Language Switcher -->
-                        <button @click="switchLanguage" class="btn-secondary text-sm plausible-event-name=SwitchLanguage" :title="$t('language.switch')">
-                            <span class="hidden sm:inline">{{ currentLanguage === 'en' ? $t('language.russian') :
-                                $t('language.english') }}</span>
-                            <span class="sm:hidden">{{ currentLanguage === 'en' ? 'RU' : 'EN' }}</span>
-                        </button>
+                            <!-- Language Switcher -->
+                            <button @click="switchLanguage" class="btn-secondary text-sm plausible-event-name=SwitchLanguage" :title="$t('language.switch')">
+                                <span class="hidden sm:inline">{{ currentLanguage === 'en' ? $t('language.russian') :
+                                    $t('language.english') }}</span>
+                                <span class="sm:hidden">{{ currentLanguage === 'en' ? 'RU' : 'EN' }}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
