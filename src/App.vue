@@ -37,7 +37,7 @@
                     <div>
                         <label for="url-input"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">
-                            Google MyMaps URL
+                            URL
                         </label>
                         <input id="url-input" v-model="inputUrl" type="url" :placeholder="$t('form.urlPlaceholder')"
                             class="input-field" :class="{
@@ -130,7 +130,7 @@
             <div v-if="(isScrapingFlow) && urlValidation.type === 'valid-url'"
                 class="card p-6 mb-8">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
-                    {{ $t('scraped.title') }}
+                    {{ scrapingError ? $t('scraped.error') : $t('scraped.title') }}
                 </h2>
 
                 <!-- Loading state -->
@@ -355,19 +355,41 @@
         <!-- Footer -->
         <footer
             class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
-            <div class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition">
-                <p>Made with ❤️ using Vue.js and Tailwind CSS</p>
+            <div class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition space-y-2">
+                <p>{{ $t('footer.madeWith') }}</p>
+                <p class="text-xs opacity-75">{{ $t('footer.disclaimer') }}</p>
             </div>
         </footer>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ThemeSwitcher } from './components'
 
 const { locale } = useI18n()
+
+// Handle popstate events (browser back/forward)
+function handlePopState() {
+    const path = window.location.pathname
+    const newLocale = path.startsWith('/ru') ? 'ru' : 'en'
+    locale.value = newLocale
+    
+    // Save to localStorage
+    localStorage.setItem('locale', newLocale)
+    
+    // Update document meta tags
+    updateDocumentMeta(newLocale)
+}
+
+onMounted(() => {
+    window.addEventListener('popstate', handlePopState)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('popstate', handlePopState)
+})
 
 // Reactive data
 const inputUrl = ref('')
@@ -656,7 +678,44 @@ function resetForm() {
     copySuccess.value = false
 }
 
+// Update document meta tags based on locale
+function updateDocumentMeta(locale: string) {
+    document.documentElement.lang = locale
+    
+    // Update canonical URL
+    const canonical = document.querySelector('link[rel="canonical"]')
+    if (canonical) {
+        const baseUrl = 'https://kml.trips.place'
+        canonical.setAttribute('href', locale === 'en' ? baseUrl + '/' : `${baseUrl}/${locale}`)
+    }
+    
+    // Update OG URL
+    const ogUrl = document.querySelector('meta[property="og:url"]')
+    if (ogUrl) {
+        const baseUrl = 'https://kml.trips.place'
+        ogUrl.setAttribute('content', locale === 'en' ? baseUrl + '/' : `${baseUrl}/${locale}`)
+    }
+    
+    // Update Twitter URL
+    const twitterUrl = document.querySelector('meta[name="twitter:url"]')
+    if (twitterUrl) {
+        const baseUrl = 'https://kml.trips.place'
+        twitterUrl.setAttribute('content', locale === 'en' ? baseUrl + '/' : `${baseUrl}/${locale}`)
+    }
+}
+
 function switchLanguage() {
-    locale.value = locale.value === 'en' ? 'ru' : 'en'
+    const newLocale = locale.value === 'en' ? 'ru' : 'en'
+    locale.value = newLocale
+    
+    // Save to localStorage
+    localStorage.setItem('locale', newLocale)
+    
+    // Update document meta tags
+    updateDocumentMeta(newLocale)
+    
+    // Update URL without reloading the page
+    const newPath = newLocale === 'en' ? '/' : `/${newLocale}`
+    window.history.pushState(null, '', newPath)
 }
 </script>

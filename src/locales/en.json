@@ -1,24 +1,24 @@
 {
   "app": {
-    "title": "Google MyMaps KML Extractor",
-    "description": "Extract KML and GPX files from Google MyMaps easily"
+    "title": "KML/KMZ Extractor from Google My Maps ",
+    "description": "Extract KML and KMZ files from Google My Maps easily"
   },
   "form": {
-    "urlPlaceholder": "Paste your Google MyMaps URL here...",
-    "extract": "Extract KML Files",
-    "validUrl": "Valid Google MyMaps URL detected!",
+    "urlPlaceholder": "Paste Google My Maps URL or page containing Google My Maps links...",
+    "extract": "Extract KML/KMZ Files",
+    "validUrl": "Valid Google My Maps URL detected!",
     "invalidUrl": "Please enter a valid URL",
     "invalidUrlHelp": "The URL you entered is not properly formatted. Please check and try again.",
-    "invalidGoogleMaps": "Invalid Google MyMaps URL",
+    "invalidGoogleMaps": "Invalid Google My Maps URL",
     "invalidGoogleMapsHelp": "This looks like a Google Maps URL but couldn't extract the map ID. Please check the URL.",
     "validUrlNotGoogle": "Valid URL detected - possible scan for Google Maps links on it...",
-    "scrapingPageHelp": "We'll try to find Google MyMaps links on this page."
+    "scrapingPageHelp": "We'll try to find Google My Maps links on this page."
   },
   "download": {
     "title": "Download Options",
     "kmz": "KMZ (Compressed)",
-    "kmzDesc": "Recommended format with full icon support",
-    "kml": "KML (Uncompressed)", 
+    "kmzDesc": "Compressed format with full icon support",
+    "kml": "KML", 
     "kmlDesc": "Standard format, limited icon support",
     "newExtraction": "Extract Another Map",
     "googleMapsUrl": "Google Maps URL",
@@ -64,5 +64,9 @@
       "dark": "Switch to dark theme",
       "auto": "Use system theme"
     }
+  },
+  "footer": {
+    "madeWith": "Made with ❤️ using Vue.js and Tailwind CSS",
+    "disclaimer": "Google and Google My Maps are trademarks of Google LLC and this project is not endorsed by or affiliated with Google in any way."
   }
 }

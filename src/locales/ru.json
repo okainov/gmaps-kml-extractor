@@ -1,26 +1,26 @@
 {
   "app": {
-    "title": "Экспорт KML из Google MyMaps",
-    "description": "Легко извлекайте KML и GPX файлы из Google MyMaps"
+    "title": "Экспорт KML/KMZ из Google My Maps",
+    "description": "Загрузка KML и KMZ из Google My Maps в один клик!"
   },
   "form": {
-    "urlPlaceholder": "Вставьте ссылку на Google MyMaps здесь...",
-    "extract": "Извлечь KML файлы",
-    "validUrl": "Обнаружена корректная ссылка Google MyMaps!",
+    "urlPlaceholder": "Вставьте ссылку на карту Google My Maps или страницу с ссылками на карты...",
+    "extract": "Извлечь KML/KMZ файлы",
+    "validUrl": "Корректная ссылка Google My Maps!",
     "invalidUrl": "Пожалуйста, введите корректную ссылку",
     "invalidUrlHelp": "Введённая ссылка некорректно отформатирована. Проверьте и попробуйте снова.",
-    "invalidGoogleMaps": "Некорректная ссылка Google MyMaps",
+    "invalidGoogleMaps": "Некорректная ссылка Google My Maps",
     "invalidGoogleMapsHelp": "Это похоже на ссылку Google Maps, но не удалось извлечь ID карты. Проверьте ссылку.",
-    "validUrlNotGoogle": "Обнаружена корректная ссылка - ищем ссылки Google Maps...",
-    "scrapingPageHelp": "Мы попытаемся найти ссылки Google MyMaps на этой странице."
+    "validUrlNotGoogle": "Обнаружена корректная ссылка - возможен поиск карт на странице...",
+    "scrapingPageHelp": "Мы попытаемся найти ссылки Google My Maps на этой странице."
   },
   "download": {
     "title": "Варианты загрузки",
     "kmz": "KMZ (Сжатый)",
-    "kmzDesc": "Рекомендуемый формат с полной поддержкой иконок",
-    "kml": "KML (Несжатый)",
+    "kmzDesc": "Сжатый формат с полной поддержкой иконок",
+    "kml": "KML",
     "kmlDesc": "Стандартный формат, ограниченная поддержка иконок",
-    "newExtraction": "Извлечь другую карту",
+    "newExtraction": "Обработать другую карту",
     "googleMapsUrl": "Ссылка Google Maps",
     "visitMaps": "Перейти",
     "copyUrl": "Копировать",
@@ -44,10 +44,10 @@
     "copied": "Скопировано!"
   },
   "examples": {
-    "title": "Примеры ссылок:",
-    "edit": "Ссылка редактирования",
-    "viewer": "Ссылка просмотра",
-    "embed": "Ссылка вставки"
+    "title": "Примеры поддерживаемых ссылок Google My Maps:",
+    "edit": "Ссылка edit",
+    "viewer": "Ссылка viewer",
+    "embed": "Ссылка embed"
   },
   "language": {
     "switch": "Сменить язык",
@@ -64,5 +64,9 @@
       "dark": "Переключить на тёмную тему",
       "auto": "Использовать системную тему"
     }
+  },
+  "footer": {
+    "madeWith": "Сделано с ❤️ используя Vue.js и Tailwind CSS",
+    "disclaimer": "Google и Google My Maps являются товарными знаками Google LLC, и этот проект не связан и не одобрен Google никаким образом."
   }
 }
