@@ -19,7 +19,7 @@
                         <ThemeSwitcher />
 
                         <!-- Language Switcher -->
-                        <button @click="switchLanguage" class="btn-secondary text-sm" :title="$t('language.switch')">
+                        <button @click="switchLanguage" class="btn-secondary text-sm plausible-event-name=SwitchLanguage" :title="$t('language.switch')">
                             <span class="hidden sm:inline">{{ currentLanguage === 'en' ? $t('language.russian') :
                                 $t('language.english') }}</span>
                             <span class="sm:hidden">{{ currentLanguage === 'en' ? 'RU' : 'EN' }}</span>
@@ -108,7 +108,7 @@
                     </div>
 
                     <button type="submit" :disabled="!urlValidation.isValid || isLoading || isScrapingUrl"
-                        class="btn-primary w-full sm:w-auto"
+                        class="btn-primary w-full sm:w-auto plausible-event-name=ExtractClick"
                         :class="{ 'opacity-50 cursor-not-allowed': !urlValidation.isValid || isLoading || isScrapingUrl }">
                         <span v-if="isLoading" class="inline-flex items-center">
                             <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +156,7 @@
                     <p class="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
                         {{ scrapingError }}
                     </p>
-                    <button @click="scrapingError = ''; extractMid()" class="mt-4 btn-secondary text-sm">
+                    <button @click="scrapingError = ''; extractMid()" class="mt-4 btn-secondary text-sm plausible-event-name=ErrorTryAgain">
                         {{ $t('scraped.tryAgain') }}
                     </button>
                 </div>
@@ -169,7 +169,7 @@
                     <div class="grid gap-3">
                         <button v-for="(scrapedUrl, index) in scrapedUrls" :key="index"
                             @click="useScrapedUrl(scrapedUrl)"
-                            class="text-left p-4 border rounded-lg transition-all group"
+                            class="text-left p-4 border rounded-lg transition-all group plausible-event-name=scrapedClick"
                             :class="scrapedUrl === selectedScrapedUrl 
                                 ? 'bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700' 
                                 : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20'">
@@ -294,7 +294,7 @@
                             {{ $t('download.visitMaps') }}
                         </a>
                         <button @click="copyToClipboard(currentGoogleMapsUrl)"
-                            class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white rounded-lg text-sm transition-colors font-medium"
+                            class="plausible-event-name=CopyToClipboard inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white rounded-lg text-sm transition-colors font-medium"
                             :class="{ 'bg-green-600 hover:bg-green-700': copySuccess }">
                             <svg v-if="!copySuccess" class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
@@ -311,7 +311,7 @@
                     </div>
                 </div>
 
-                <button @click="resetForm" class="btn-secondary mt-4">
+                <button @click="resetForm" class="btn-secondary mt-4 plausible-event-name=ResetForm">
                     {{ $t('download.newExtraction') }}
                 </button>
             </div>
