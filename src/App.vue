@@ -33,7 +33,7 @@
         <main class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
             <!-- URL Input Form -->
             <div class="card p-6 mb-8">
-                <form @submit.prevent="extractMid" class="space-y-4">
+                <form @submit.prevent="extractMid" class="space-y-4 plausible-event-name=ExtractClick">
                     <div>
                         <label for="url-input"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">
@@ -107,8 +107,8 @@
                         </div>
                     </div>
 
-                    <button :disabled="!urlValidation.isValid || isLoading || isScrapingUrl"
-                        class="btn-primary w-full sm:w-auto plausible-event-name=ExtractClick"
+                    <button type="submit" :disabled="!urlValidation.isValid || isLoading || isScrapingUrl"
+                        class="btn-primary w-full sm:w-auto"
                         :class="{ 'opacity-50 cursor-not-allowed': !urlValidation.isValid || isLoading || isScrapingUrl }">
                         <span v-if="isLoading" class="inline-flex items-center">
                             <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
