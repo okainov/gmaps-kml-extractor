@@ -227,8 +227,9 @@
 
             <!-- Download Links -->
             <div v-if="extractedMid" class="card p-6 mb-8">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 theme-transition">{{
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 theme-transition">{{
                     $t('download.title') }}</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 theme-transition">{{ $t('download.subtitle') }}</p>
 
                 <div class="grid gap-4 sm:grid-cols-2">
                     <!-- KML Download (Recommended) -->
@@ -309,6 +310,19 @@
                             {{ copySuccess ? $t('download.copied') : $t('download.copyUrl') }}
                         </button>
                     </div>
+                </div>
+
+                <!-- Support Message -->
+                <div class="text-center mt-6 mb-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        {{ $t('download.supportMessage') }}
+                        <a href="https://buymeacoffee.com/okainov" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium underline plausible-event-name=BuyMeTea">
+                            {{ $t('download.buyMeTea') }}
+                        </a>
+                    </p>
                 </div>
 
                 <button @click="resetForm" class="btn-secondary mt-4 plausible-event-name=ResetForm">

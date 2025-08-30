@@ -15,7 +15,8 @@
     "scrapingPageHelp": "We'll try to find Google My Maps links on this page."
   },
   "download": {
-    "title": "Download Options",
+    "title": "🎉 Success! Your files are ready!",
+    "subtitle": "Your Google My Maps has been processed successfully!",
     "kmz": "KMZ (Compressed)",
     "kmzDesc": "Compressed format with full icon support",
     "kml": "KML", 
@@ -24,7 +25,9 @@
     "googleMapsUrl": "Google Maps URL",
     "visitMaps": "Visit",
     "copyUrl": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "supportMessage": "If you found this useful, consider",
+    "buyMeTea": "supporting me with tea ☕"
   },
   "scraped": {
     "title": "Found Google Maps URLs",
