@@ -107,7 +107,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" :disabled="!urlValidation.isValid || isLoading || isScrapingUrl"
+                    <button :disabled="!urlValidation.isValid || isLoading || isScrapingUrl"
                         class="btn-primary w-full sm:w-auto plausible-event-name=ExtractClick"
                         :class="{ 'opacity-50 cursor-not-allowed': !urlValidation.isValid || isLoading || isScrapingUrl }">
                         <span v-if="isLoading" class="inline-flex items-center">
