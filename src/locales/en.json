@@ -20,7 +20,11 @@
     "kmzDesc": "Recommended format with full icon support",
     "kml": "KML (Uncompressed)", 
     "kmlDesc": "Standard format, limited icon support",
-    "newExtraction": "Extract Another Map"
+    "newExtraction": "Extract Another Map",
+    "googleMapsUrl": "Google Maps URL",
+    "visitMaps": "Visit",
+    "copyUrl": "Copy",
+    "copied": "Copied!"
   },
   "scraped": {
     "title": "Found Google Maps URLs",
@@ -30,6 +34,13 @@
     "notFoundHelp": "The page doesn't contain any recognizable Google MyMaps links.",
     "error": "Failed to scan the page",
     "tryAgain": "Try Again"
+  },
+  "googleMaps": {
+    "title": "Google MyMaps Actions",
+    "description": "Your Google MyMaps URL is ready. You can visit the map or copy the URL to share:",
+    "visit": "Visit Google Maps",
+    "copy": "Copy URL",
+    "copied": "Copied!"
   },
   "examples": {
     "title": "Example URLs:",

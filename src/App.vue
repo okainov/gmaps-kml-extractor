@@ -8,7 +8,7 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title')
-                            }}</h1>
+                        }}</h1>
                         <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}
                         </p>
                     </div>
@@ -205,23 +205,22 @@
             </div>
 
 
-
             <!-- Download Links -->
             <div v-if="extractedMid" class="card p-6 mb-8">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 theme-transition">{{
                     $t('download.title') }}</h2>
 
                 <div class="grid gap-4 sm:grid-cols-2">
-                    <!-- KMZ Download -->
-                    <a :href="kmzUrl" target="_blank" rel="noopener noreferrer"
+                    <!-- KML Download (Recommended) -->
+                    <a :href="kmlUrl" target="_blank" rel="noopener noreferrer"
                         class="block p-4 border-2 border-primary-200 dark:border-primary-700 rounded-lg hover:border-primary-400 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group">
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3
                                     class="font-semibold text-primary-700 dark:text-primary-300 group-hover:text-primary-800 dark:group-hover:text-primary-200 theme-transition">
-                                    {{ $t('download.kmz') }}</h3>
+                                    {{ $t('download.kml') }}</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 theme-transition">{{
-                                    $t('download.kmzDesc') }}</p>
+                                    $t('download.kmlDesc') }}</p>
                             </div>
                             <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300 theme-transition"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,16 +231,16 @@
                         </div>
                     </a>
 
-                    <!-- KML Download -->
-                    <a :href="kmlUrl" target="_blank" rel="noopener noreferrer"
+                    <!-- KMZ Download -->
+                    <a :href="kmzUrl" target="_blank" rel="noopener noreferrer"
                         class="block p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all group">
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3
                                     class="font-semibold text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 theme-transition">
-                                    {{ $t('download.kml') }}</h3>
+                                    {{ $t('download.kmz') }}</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 theme-transition">{{
-                                    $t('download.kmlDesc') }}</p>
+                                    $t('download.kmzDesc') }}</p>
                             </div>
                             <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 theme-transition"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,6 +250,45 @@
                             </svg>
                         </div>
                     </a>
+                </div>
+
+
+                <!-- Google Maps URL Section -->
+                <div v-if="currentGoogleMapsUrl" class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                        {{ $t('download.googleMapsUrl') }}
+                    </h3>
+                    <div class="bg-white dark:bg-gray-900 rounded p-3 mb-4 border border-gray-200 dark:border-gray-600">
+                        <code class="text-xs text-gray-800 dark:text-gray-200 break-all">
+                            {{ currentGoogleMapsUrl }}
+                        </code>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <a :href="currentGoogleMapsUrl" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors font-medium">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                </path>
+                            </svg>
+                            {{ $t('download.visitMaps') }}
+                        </a>
+                        <button @click="copyToClipboard(currentGoogleMapsUrl)"
+                            class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 text-white rounded-lg text-sm transition-colors font-medium"
+                            :class="{ 'bg-green-600 hover:bg-green-700': copySuccess }">
+                            <svg v-if="!copySuccess" class="w-4 h-4 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <svg v-else class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            {{ copySuccess ? $t('download.copied') : $t('download.copyUrl') }}
+                        </button>
+                    </div>
                 </div>
 
                 <button @click="resetForm" class="btn-secondary mt-4">
@@ -318,6 +356,7 @@ const isLoading = ref(false)
 const scrapedUrls = ref<string[]>([])
 const isScrapingUrl = ref(false)
 const scrapingError = ref('')
+const copySuccess = ref(false)
 
 // Computed properties
 const currentLanguage = computed(() => locale.value)
@@ -362,7 +401,46 @@ const kmlUrl = computed(() => {
     return `https://www.google.com/maps/d/u/0/kml?mid=${extractedMid.value}&forcekml=1`
 })
 
+const currentGoogleMapsUrl = computed(() => {
+    // If we have a direct Google Maps URL input
+    if (urlValidation.value.type === 'google-maps' && urlValidation.value.isValid) {
+        return inputUrl.value
+    }
+    // If we have extracted a MID from a scraped URL, reconstruct the viewer URL
+    if (extractedMid.value) {
+        return `https://google.com/maps/d/u/0/viewer?mid=${extractedMid.value}`
+    }
+    return ''
+})
+
 // Methods
+async function copyToClipboard(text: string) {
+    try {
+        await navigator.clipboard.writeText(text)
+        copySuccess.value = true
+        setTimeout(() => {
+            copySuccess.value = false
+        }, 2000) // Show success for 2 seconds
+    } catch (error) {
+        console.error('Failed to copy to clipboard:', error)
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        document.body.appendChild(textArea)
+        textArea.select()
+        try {
+            document.execCommand('copy')
+            copySuccess.value = true
+            setTimeout(() => {
+                copySuccess.value = false
+            }, 2000)
+        } catch (fallbackError) {
+            console.error('Fallback copy failed:', fallbackError)
+        }
+        document.body.removeChild(textArea)
+    }
+}
+
 async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
     try {
         isScrapingUrl.value = true
@@ -399,10 +477,10 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
                 matches.forEach((match: string) => {
                     // Ensure it starts with https://
                     let cleanUrl = match.startsWith('https://') ? match : `https://${match}`
-                    
+
                     // Normalize by removing www. from Google domains to avoid duplicates
                     cleanUrl = cleanUrl.replace(/https:\/\/www\.google\.com/g, 'https://google.com')
-                    
+
                     try {
                         new URL(cleanUrl) // Validate URL
                         foundUrls.add(cleanUrl)
@@ -518,6 +596,7 @@ function resetForm() {
     scrapedUrls.value = []
     isScrapingUrl.value = false
     scrapingError.value = ''
+    copySuccess.value = false
 }
 
 function switchLanguage() {
