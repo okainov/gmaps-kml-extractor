@@ -9,7 +9,7 @@
                     <!-- Title section - centered on mobile, left-aligned on desktop -->
                     <div class="text-center sm:text-left">
                         <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">{{ $t('app.title')
-                            }}</h1>
+                        }}</h1>
                         <p class="text-gray-600 dark:text-gray-300 mt-1 theme-transition">{{ $t('app.description') }}
                         </p>
                     </div>
@@ -124,7 +124,7 @@
                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                 </path>
                             </svg>
-                            Processing...
+                            {{ $t('scraped.processing') }}
                         </span>
                         <span v-else>{{ $t('form.extract') }}</span>
                     </button>
@@ -135,8 +135,7 @@
             <div v-if="isScrapingFlow && scrapedUrls.length != 1">
                 <div v-if="isScrapingFlow && urlValidation.type === 'valid-url'" class="card p-6 mb-8">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
-                        {{ scrapingError ? $t('scraped.error') :
-                            (scrapedUrls.length == 0 ? $t('scraped.notFound') : $t('scraped.title')) }}
+                        {{ scrapedSectionTitle }}
                     </h2>
 
                     <!-- Loading state -->
@@ -236,8 +235,10 @@
 
             <!-- Download Links -->
             <div v-if="extractedMid" class="card p-6 mb-8">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 theme-transition">{{
-                    $t('download.title') }}</h2>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 theme-transition">
+                    <span v-if="celebrationMessage">{{ celebrationMessage }}</span>
+                    <span v-else>{{ $t('download.title') }}</span>
+                </h2>
                 <p class="text-gray-600 dark:text-gray-400 mb-6 theme-transition">{{ $t('download.subtitle') }}</p>
 
                 <div class="grid gap-4 sm:grid-cols-2">
@@ -375,8 +376,7 @@
         </main>
 
         <!-- Footer -->
-        <footer
-            class="py-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
+        <footer class="py-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 theme-transition">
             <div
                 class="max-w-4xl mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm theme-transition space-y-2">
                 <p>{{ $t('footer.madeWith') }}</p>
@@ -428,6 +428,41 @@ const scrapedPageSize = ref(0)
 
 // Computed properties
 const currentLanguage = computed(() => locale.value)
+
+// Dynamic celebration message based on time and randomization
+const celebrationMessage = computed(() => {
+    if (!extractedMid.value) return null
+
+    const hour = new Date().getHours()
+    const random = Math.floor(Math.random() * 3) + 1 // 1, 2, or 3
+
+    const { t } = useI18n()
+
+    if (hour >= 5 && hour < 12) {
+        return t(`celebration.morning_${random}`)
+    } else if (hour >= 12 && hour < 18) {
+        return t(`celebration.afternoon_${random}`)
+    } else if (hour >= 18 && hour < 23) {
+        return t(`celebration.evening_${random}`)
+    } else {
+        // Late night (23:00-4:59)
+        return t(`celebration.night_${random}`)
+    }
+})
+
+// Dynamic scraped section title based on state
+const scrapedSectionTitle = computed(() => {
+    const { t } = useI18n()
+    if (isScrapingUrl.value) {
+        return t('scraped.processing')
+    } else if (scrapingError.value) {
+        return t('scraped.error')
+    } else if (scrapedUrls.value.length === 0) {
+        return t('scraped.notFound')
+    } else {
+        return t('scraped.title')
+    }
+})
 
 const urlValidation = computed(() => {
     extractedMid.value = ''

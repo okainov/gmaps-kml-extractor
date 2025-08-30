@@ -37,7 +37,8 @@
     "notFoundHelp": "The page doesn't contain any recognizable Google MyMaps links.",
     "pageInfo": "Page successfully parsed ({size})",
     "error": "Failed to scan the page",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "processing": "Processing..."
   },
   "googleMaps": {
     "title": "Google MyMaps Actions",
@@ -67,6 +68,20 @@
       "dark": "Switch to dark theme",
       "auto": "Use system theme"
     }
+  },
+  "celebration": {
+    "morning_1": "🌅 Good morning! Your files are ready!",
+    "morning_2": "☕ Rise and shine! Files extracted successfully!",
+    "morning_3": "🌞 Early bird gets the KML! Success!",
+    "afternoon_1": "🎯 Afternoon success! Your files are ready!",
+    "afternoon_2": "⚡ Boom! Extraction complete!",
+    "afternoon_3": "🚀 Mission accomplished! Files ready!",
+    "evening_1": "🌙 Evening magic! Your files are ready!",
+    "evening_2": "✨ Another successful extraction!",
+    "evening_3": "🎊 Files ready to download!",
+    "night_1": "🌌 Burning the midnight oil? Files ready!",
+    "night_2": "🦉 Night owl got the KML! Success!",
+    "night_3": "⭐ Late night magic! Files extracted!"
   },
   "footer": {
     "madeWith": "Made with ❤️ using Vue.js and Tailwind CSS",
