@@ -398,7 +398,11 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
             if (matches) {
                 matches.forEach((match: string) => {
                     // Ensure it starts with https://
-                    const cleanUrl = match.startsWith('https://') ? match : `https://${match}`
+                    let cleanUrl = match.startsWith('https://') ? match : `https://${match}`
+                    
+                    // Normalize by removing www. from Google domains to avoid duplicates
+                    cleanUrl = cleanUrl.replace(/https:\/\/www\.google\.com/g, 'https://google.com')
+                    
                     try {
                         new URL(cleanUrl) // Validate URL
                         foundUrls.add(cleanUrl)
