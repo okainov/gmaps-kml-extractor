@@ -127,7 +127,7 @@
             </div>
 
             <!-- Scraped URLs Section -->
-            <div v-if="(isScrapingUrl || scrapedUrls.length > 0 || scrapingError) && urlValidation.type === 'valid-url'"
+            <div v-if="(isScrapingFlow) && urlValidation.type === 'valid-url'"
                 class="card p-6 mb-8">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
                     {{ $t('scraped.title') }}
@@ -169,19 +169,36 @@
                     <div class="grid gap-3">
                         <button v-for="(scrapedUrl, index) in scrapedUrls" :key="index"
                             @click="useScrapedUrl(scrapedUrl)"
-                            class="text-left p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group">
+                            class="text-left p-4 border rounded-lg transition-all group"
+                            :class="scrapedUrl === selectedScrapedUrl 
+                                ? 'bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700' 
+                                : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20'">
                             <div class="flex items-start justify-between">
                                 <div class="flex-1 mr-3">
-                                    <span
-                                        class="text-primary-600 dark:text-primary-400 text-sm font-mono break-all group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                                    <span class="text-sm font-mono break-all transition-colors"
+                                        :class="scrapedUrl === selectedScrapedUrl 
+                                            ? 'text-green-700 dark:text-green-300' 
+                                            : 'text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300'">
                                         {{ scrapedUrl }}
                                     </span>
                                 </div>
-                                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors flex-shrink-0 mt-0.5"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
+                                <div class="flex items-center space-x-2 flex-shrink-0 mt-0.5">
+                                    <!-- Selected checkmark -->
+                                    <svg v-if="scrapedUrl === selectedScrapedUrl" 
+                                        class="w-4 h-4 text-green-600 dark:text-green-400" 
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <!-- Arrow -->
+                                    <svg class="w-4 h-4 transition-colors" 
+                                        :class="scrapedUrl === selectedScrapedUrl 
+                                            ? 'text-green-600 dark:text-green-400' 
+                                            : 'text-gray-400 dark:text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400'"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                    </svg>
+                                </div>
                             </div>
                         </button>
                     </div>
@@ -200,6 +217,9 @@
                     </p>
                     <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">
                         {{ $t('scraped.notFoundHelp') }}
+                    </p>
+                    <p v-if="formattedPageSize" class="text-gray-400 dark:text-gray-500 text-xs mt-2">
+                        {{ $t('scraped.pageInfo', { size: formattedPageSize }) }}
                     </p>
                 </div>
             </div>
@@ -355,14 +375,25 @@ const extractedMid = ref('')
 const isLoading = ref(false)
 const scrapedUrls = ref<string[]>([])
 const isScrapingUrl = ref(false)
+const isScrapingFlow = ref(false)
 const scrapingError = ref('')
 const copySuccess = ref(false)
+const selectedScrapedUrl = ref('')
+const scrapedPageSize = ref(0)
 
 // Computed properties
 const currentLanguage = computed(() => locale.value)
 
-const urlValidation = computed(() => {
-    scrapingError.value = '' // Clean up old errors if any
+const urlValidation = computed(() => {   
+    extractedMid.value = ''
+    scrapedUrls.value = []
+    selectedScrapedUrl.value = ''
+    scrapedPageSize.value = 0
+    isScrapingUrl.value = false
+    isScrapingFlow.value = false
+    scrapingError.value = ''
+    copySuccess.value = false
+
     if (!inputUrl.value) {
         return { type: 'empty', isValid: false }
     }
@@ -413,6 +444,19 @@ const currentGoogleMapsUrl = computed(() => {
     return ''
 })
 
+const formattedPageSize = computed(() => {
+    if (scrapedPageSize.value === 0) return ''
+    
+    const size = scrapedPageSize.value
+    if (size < 1024) {
+        return `${size} bytes`
+    } else if (size < 1024 * 1024) {
+        return `${(size / 1024).toFixed(1)} KB`
+    } else {
+        return `${(size / (1024 * 1024)).toFixed(1)} MB`
+    }
+})
+
 // Methods
 async function copyToClipboard(text: string) {
     try {
@@ -444,7 +488,9 @@ async function copyToClipboard(text: string) {
 async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
     try {
         isScrapingUrl.value = true
+        isScrapingFlow.value = true
         scrapingError.value = '' // Clear any previous errors
+        scrapedPageSize.value = 0 // Reset page size
 
         // Use a CORS proxy to fetch the page content
         const corsProxy = 'https://api.allorigins.win/get?url='
@@ -461,6 +507,7 @@ async function scrapeUrlForGoogleMaps(url: string): Promise<string[]> {
         }
 
         const html = data.contents
+        scrapedPageSize.value = new Blob([html]).size // Calculate page size in bytes
 
         // Regex patterns to find Google Maps URLs
         const patterns = [
@@ -585,6 +632,7 @@ function useScrapedUrl(scrapedUrl: string) {
     const mid = extractMidFromUrl(scrapedUrl)
     if (mid) {
         extractedMid.value = mid
+        selectedScrapedUrl.value = scrapedUrl // Track which URL was selected
         //inputUrl.value = scrapedUrl // Update the input to show the selected URL
         //scrapedUrls.value = [] // Clear the scraped URLs list
     }
@@ -594,7 +642,10 @@ function resetForm() {
     inputUrl.value = ''
     extractedMid.value = ''
     scrapedUrls.value = []
+    selectedScrapedUrl.value = ''
+    scrapedPageSize.value = 0
     isScrapingUrl.value = false
+    isScrapingFlow.value = false
     scrapingError.value = ''
     copySuccess.value = false
 }

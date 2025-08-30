@@ -32,6 +32,7 @@
     "found": "Found {count} Google Maps URL(s) on this page:",
     "notFound": "No Google Maps URLs found",
     "notFoundHelp": "The page doesn't contain any recognizable Google MyMaps links.",
+    "pageInfo": "Page successfully parsed ({size})",
     "error": "Failed to scan the page",
     "tryAgain": "Try Again"
   },
