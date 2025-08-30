@@ -33,7 +33,7 @@
         <main class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
             <!-- URL Input Form -->
             <div class="card p-6 mb-8">
-                <form @submit.prevent="extractMid" class="space-y-4 plausible-event-name=ExtractClick">
+                <form @submit.prevent="extractMid" class="space-y-4">
                     <div>
                         <label for="url-input"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">
@@ -596,6 +596,7 @@ function extractMidFromUrl(url: string): string | null {
 
 function extractMid() {
     const validation = urlValidation.value
+    plausible('ExtractClick')
 
     if (validation.type === 'invalid-url') {
         return // Show error message through template
